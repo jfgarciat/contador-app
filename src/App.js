@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Header from "./components/Layout/Header";
+import List from "./components/List/List";
+import TodoInput from "./components/TodoInput/TodoInput";
 
 function App() {
+  const [todos, setTodos] = useState([])
+
+  const addTodoHandler = (aja) => {
+    setTodos((prevTodos)=>{
+      const updateTodos = [...prevTodos];
+      updateTodos.unshift({text: [`${aja}`], id: Math.random().toString()});
+      console.log(updateTodos);
+      return updateTodos;
+    })
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div >
+      <Header />
+      <main>
+        <TodoInput onAddTodo = {addTodoHandler}/>
+        <List items={todos} />
+      </main>
     </div>
   );
 }
